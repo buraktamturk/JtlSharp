@@ -306,7 +306,7 @@ public record Product : AbstractIdentity
     /// <summary>
     /// double
     /// </summary>
-    public decimal? stockLevel { get; init; }
+    public ProductStockLevel? stockLevel { get; init; }
 
     /// <summary>
     /// integer

@@ -1,5 +1,7 @@
-﻿using System.Text.Json;
+﻿using System.IO.Compression;
+using System.Text.Json;
 using Jtl.Connector.Core.Model;
+using JtlSharp.Converter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -9,9 +11,19 @@ namespace JtlSharp;
 
 public static class EndpointExtensions
 {
+    private static readonly JsonSerializerOptions _options = new JsonSerializerOptions()
+    {
+        Converters =
+        {
+            new IdentityConverter(),
+            new DateTimeOffsetConverter(),
+            new ProductStockLevelConverter()
+        }
+    };
+    
     private static T? Read<T>(this JtlRpc rpc) where T : class
     {
-        return rpc.@params is {} node ? node.Deserialize<T>() : null;
+        return rpc.@params is {} node ? node.Deserialize<T>(_options) : null;
     }
     
     private static async Task<object> Process<T>(this Feature<T> feature, JtlRpc rpc) where T : AbstractModel
@@ -75,7 +87,11 @@ public static class EndpointExtensions
                     
                     // token control
 
+                    await using var zipFileStream =  form.Files.Count > 0 ? form.Files[0].OpenReadStream() : null;
+                    using var zipFile = zipFileStream is null ? null : new ZipArchive(zipFileStream);
+                    
                     var service = ActivatorUtilities.CreateInstance<T>(context.RequestServices);
+                    
                     var features = service.GetFeatures();
                     
                     var result = rpc.method switch
@@ -87,6 +103,9 @@ public static class EndpointExtensions
                         
                         var s when s.StartsWith("category.")
                             => await features.Entities.Category.Process(rpc),
+                        
+                        var s when s.StartsWith("manufacturer.")
+                            => await features.Entities.Manufacturer.Process(rpc),
                         
                         _ => throw new InvalidOperationException("Method not found: " + rpc.method)
                     };

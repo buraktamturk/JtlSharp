@@ -20,6 +20,18 @@ public class SampleJtlService : IJtlService
                     Pull = GetProducts,
                     Push = CreateProduct,
                     Statistics = ProductStatistics
+                },
+                Manufacturer = new()
+                {
+                    Pull = GetBrands,
+                    Push = CreateBrand,
+                    Statistics = ProductStatistics
+                },
+                Category = new()
+                {
+                    Pull = CategoryGet,
+                    Push = CategoryPush,
+                    Statistics = ProductStatistics
                 }
             },
             Flags = new FeatureFlags()
@@ -28,9 +40,36 @@ public class SampleJtlService : IJtlService
             }
         };
 
+    private async Task<Category> CategoryPush(Category arg)
+    {
+        return arg;
+    }
+
+    private async IAsyncEnumerable<Category> CategoryGet(QueryFilter arg)
+    {
+        yield return new Category()
+        {
+
+        };
+    }
+
     private Task<int> ProductStatistics()
     {
         throw new NotImplementedException();
+    }
+    
+    public async IAsyncEnumerable<Manufacturer> GetBrands(QueryFilter filter)
+    {
+        yield return new Manufacturer()
+        {
+
+        };
+    }
+    
+    public async Task<Manufacturer> CreateBrand(Manufacturer product)
+    {
+
+        return product;
     }
     
     public async IAsyncEnumerable<Product> GetProducts(QueryFilter filter)
