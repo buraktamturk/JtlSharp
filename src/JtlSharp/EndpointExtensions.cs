@@ -104,16 +104,58 @@ public static class EndpointExtensions
                         "core.linker.clear" => rpc?.Read<Ack>() is {} ack
                             ? await features.Entities.ProcessAck(ack, true)
                             : await service.Clear(),
-                        
-                        var s when s.StartsWith("product.")
+
+                        var s when s.StartsWith("product.") 
                             => await features.Entities.Product.Process(rpc),
-                        
-                        var s when s.StartsWith("category.")
+                        var s when s.StartsWith("category.") 
                             => await features.Entities.Category.Process(rpc),
-                        
-                        var s when s.StartsWith("manufacturer.")
+                        var s when s.StartsWith("manufacturer.") 
                             => await features.Entities.Manufacturer.Process(rpc),
-                        
+                        var s when s.StartsWith("currency.") 
+                            => await features.Entities.Currency.Process(rpc),
+                        var s when s.StartsWith("customer.") 
+                            => await features.Entities.Customer.Process(rpc),
+                        var s when s.StartsWith("customerGroup.") 
+                            => await features.Entities.CustomerGroup.Process(rpc),
+                        var s when s.StartsWith("customerOrder.") 
+                            => await features.Entities.CustomerOrder.Process(rpc),
+                        var s when s.StartsWith("deliveryNote.") 
+                            => await features.Entities.DeliveryNote.Process(rpc),
+                        var s when s.StartsWith("fileDownload.") 
+                            => await features.Entities.FileDownload.Process(rpc),
+                        var s when s.StartsWith("fileUpload.") 
+                            => await features.Entities.FileUpload.Process(rpc),
+                        var s when s.StartsWith("image.") 
+                            => await features.Entities.Image.Process(rpc),
+                        var s when s.StartsWith("language.") 
+                            => await features.Entities.Language.Process(rpc),
+                        var s when s.StartsWith("measurementUnit.") 
+                            => await features.Entities.MeasurementUnit.Process(rpc),
+                        var s when s.StartsWith("mediaFile.") 
+                            => await features.Entities.MediaFile.Process(rpc),
+                        var s when s.StartsWith("partsList.") 
+                            => await features.Entities.PartsList.Process(rpc),
+                        var s when s.StartsWith("payment.") 
+                            => await features.Entities.Payment.Process(rpc),
+                        var s when s.StartsWith("productPrice.") 
+                            => await features.Entities.ProductPrice.Process(rpc),
+                        var s when s.StartsWith("productStockLevel.") 
+                            => await features.Entities.ProductStockLevel.Process(rpc),
+                        var s when s.StartsWith("specific.") 
+                            => await features.Entities.Specific.Process(rpc),
+                        var s when s.StartsWith("statusChange.") 
+                            => await features.Entities.StatusChange.Process(rpc),
+                        var s when s.StartsWith("taxClass.") 
+                            => await features.Entities.TaxClass.Process(rpc),
+                        var s when s.StartsWith("taxRate.") 
+                            => await features.Entities.TaxRate.Process(rpc),
+                        var s when s.StartsWith("taxZone.") 
+                            => await features.Entities.TaxZone.Process(rpc),
+                        var s when s.StartsWith("unit.") 
+                            => await features.Entities.Unit.Process(rpc),
+                        var s when s.StartsWith("warehouse.") 
+                            => await features.Entities.Warehouse.Process(rpc),
+
                         _ => throw new InvalidOperationException("Method not found: " + rpc.method)
                     };
                     
