@@ -24,6 +24,7 @@ public class SampleJtlService : IJtlService
                 Manufacturer = new()
                 {
                     Pull = GetBrands,
+                    Ack = AckBrand,
                     Push = CreateBrand,
                     Statistics = ProductStatistics
                 },
@@ -39,6 +40,36 @@ public class SampleJtlService : IJtlService
                 category_images_supported = true
             }
         };
+
+    public async ValueTask<ConnectorIdentification> Identify()
+    {
+        return new ConnectorIdentification()
+        {
+            endpointVersion = "2.0",
+            platformName = "JtlSharp",
+            protocolVersion = 2,
+            serverInfo = new ConnectorServerInfo()
+            {
+                executionTime = 600,
+                memoryLimit = 2048,
+                postMaxSize = 600000,
+                uploadMaxFilesize = 500000
+            }
+        };
+    }
+
+    public async Task<bool> Clear()
+    {
+        
+        return true;
+    }
+
+    private Task AckBrand(IReadOnlyCollection<Identity> arg, bool isClear)
+    {
+        
+        
+        return Task.CompletedTask;
+    }
 
     private async Task<Category> CategoryPush(Category arg)
     {
@@ -62,7 +93,25 @@ public class SampleJtlService : IJtlService
     {
         yield return new Manufacturer()
         {
-
+            id = new Identity()
+            {
+                endpoint = "apple",
+                host = 0
+            },
+            name = "Apple",
+            sort = 1,
+            urlPath = "apple",
+            websiteUrl = "https://apple.com",
+            i18ns = [
+                new ManufacturerI18n()
+                {
+                    description = "Apple Desc",
+                    languageIso = "en",
+                    metaDescription = "meta desc",
+                    metaKeywords = "meta key",
+                    titleTag = "title tag"
+                }
+            ]
         };
     }
     

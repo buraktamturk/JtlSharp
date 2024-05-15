@@ -6,13 +6,25 @@ namespace JtlSharp;
 public interface IJtlService
 {
     Feature GetFeatures();
+    
+    ValueTask<ConnectorIdentification> Identify();
+
+    Task<bool> Clear();
 }
 
-public record Feature<T>
+public interface IAckFeature
+{
+    Func<IReadOnlyCollection<Identity>, bool, Task>? Ack { get; init; }
+}
+
+public record Feature<T> : IAckFeature
     where T : AbstractModel
 {
     [JsonIgnore]
     public Func<QueryFilter, IAsyncEnumerable<T>>? Pull { get; init; }
+    
+    [JsonIgnore]
+    public Func<IReadOnlyCollection<Identity>, bool, Task>? Ack { get; init; }
     
     [JsonIgnore]
     public Func<T, Task<T>>? Push { get; init; }

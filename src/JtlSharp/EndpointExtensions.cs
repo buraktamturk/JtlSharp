@@ -97,6 +97,13 @@ public static class EndpointExtensions
                     var result = rpc.method switch
                     {
                         "core.connector.features" => features,
+                        "core.connector.ack" => await features.Entities.ProcessAck(rpc.Read<Ack>()!),
+                        "core.connector.init" => true,
+                        "connector.finish" => true,
+                        "connector.identify" => await service.Identify(),
+                        "core.linker.clear" => rpc?.Read<Ack>() is {} ack
+                            ? await features.Entities.ProcessAck(ack, true)
+                            : await service.Clear(),
                         
                         var s when s.StartsWith("product.")
                             => await features.Entities.Product.Process(rpc),
@@ -115,7 +122,7 @@ public static class EndpointExtensions
                         jtlrpc = "2.0",
                         id = rpc.id,
                         result = result
-                    });
+                    }, _options);
                 }
                 catch (Exception e)
                 {

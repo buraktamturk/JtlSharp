@@ -263,3 +263,30 @@ public record Entities
     [JsonPropertyName("Warehouse")]
     public Feature<Warehouse> Warehouse { get; init; }
 }
+
+public static class EntitiesExtensions
+{
+    public static IAckFeature GetAckFeature(this Entities entities, string type)
+    {
+        return type switch
+        {
+            "Manufacturer" => entities.Manufacturer,
+            "Category" => entities.Category,
+            "Product" => entities.Product,
+            
+            
+            
+            _ => throw new NotImplementedException()
+        };
+    }
+
+    public static async Task<bool> ProcessAck(this Entities entities, Ack ack, bool isClear = false)
+    {
+        foreach (var (key, value) in ack.identities)
+        {
+            await entities.GetAckFeature(key).Ack?.Invoke(value, false);
+        }
+
+        return true;
+    }
+}
