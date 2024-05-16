@@ -49,7 +49,7 @@ public class IdentityConverter : JsonConverter<Identity?>
         
         writer.WriteStartArray();
         writer.WriteStringValue(value.endpoint);
-        writer.WriteNumberValue(value.host.Value);
+        writer.WriteNumberValue(value.host ?? 0);
         writer.WriteEndArray();
     }
 }

@@ -33,13 +33,29 @@ public class SampleJtlService : IJtlService
                     Pull = CategoryGet,
                     Push = CategoryPush,
                     Statistics = ProductStatistics
-                }
+                },
+                ProductType = new()
+                {
+                    Pull = FetchProductType
+                },
             },
             Flags = new FeatureFlags()
             {
                 category_images_supported = true
             }
         };
+
+    private async IAsyncEnumerable<ProductType> FetchProductType(QueryFilter arg)
+    {
+        yield return new ProductType()
+        {
+            id = new Identity()
+            {
+                endpoint = "test_product_type"
+            },
+            name = "Test Product Type",
+        };
+    }
 
     public async ValueTask<ConnectorIdentification> Identify()
     {

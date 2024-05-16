@@ -1,4 +1,5 @@
 ﻿using System.IO.Compression;
+using System.Net.Http.Json;
 using System.Text.Json;
 using Jtl.Connector.Core.Model;
 using JtlSharp.Converter;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace JtlSharp;
 
@@ -50,14 +52,18 @@ public static class EndpointExtensions
         app
             .MapPost(basePath, async context =>
             {
+                var logger = context.RequestServices.GetRequiredService<ILogger<IJtlService>>();
+                
                 var form = await context.Request.ReadFormAsync();
                 if (!form.TryGetValue("jtlrpc", out var jtlrpc))
                     throw new InvalidOperationException("jtlrpc not found");
+                
+                logger.LogTrace("JtlRequest: {jtlrpc}", jtlrpc);
 
                 var rpc = JsonSerializer.Deserialize<JtlRpc>(jtlrpc);
                 if (rpc is null)
                     throw new InvalidOperationException("Invalid jtlrpc");
-
+                
                 try
                 {
                     if (!form.TryGetValue("jtlauth", out var jtlauth)) {
@@ -104,6 +110,23 @@ public static class EndpointExtensions
                         "core.linker.clear" => rpc?.Read<Ack>() is {} ack
                             ? await features.Entities.ProcessAck(ack, true)
                             : await service.Clear(),
+                        
+                        "globalData.pull" => new GlobalData()
+                        {
+                            currencies = features.Entities.Currency?.Pull is null ? [] : await features.Entities.Currency.Pull(null).ToListAsync(),
+                            languages = features.Entities.Language?.Pull is null ? [] : await features.Entities.Language.Pull(null).ToListAsync(),
+                            warehouses = features.Entities.Warehouse?.Pull is null ? [] : await features.Entities.Warehouse.Pull(null).ToListAsync(),
+                            productTypes = features.Entities.ProductType?.Pull is null ? [] : await features.Entities.ProductType.Pull(null).ToListAsync(),
+                            shippingClasses = features.Entities.ShippingClass?.Pull is null ? [] : await features.Entities.ShippingClass.Pull(null).ToListAsync(),
+                            shippingMethods = features.Entities.ShippingMethod?.Pull is null ? [] : await features.Entities.ShippingMethod.Pull(null).ToListAsync(),
+                            crossSellingGroups = features.Entities.CrossSellingGroup?.Pull is null ? [] : await features.Entities.CrossSellingGroup.Pull(null).ToListAsync(),
+                            taxRates = features.Entities.TaxRate?.Pull is null ? [] : await features.Entities.TaxRate.Pull(null).ToListAsync(),
+                            units = features.Entities.Unit?.Pull is null ? [] : await features.Entities.Unit.Pull(null).ToListAsync(),
+                            configGroups = features.Entities.ConfigGroup?.Pull is null ? [] : await features.Entities.ConfigGroup.Pull(null).ToListAsync(),
+                            configItems = features.Entities.ConfigItem?.Pull is null ? [] : await features.Entities.ConfigItem.Pull(null).ToListAsync(),
+                            customerGroups = features.Entities.CustomerGroup?.Pull is null ? [] : await features.Entities.CustomerGroup.Pull(null).ToListAsync(),
+                            measurementUnits = features.Entities.MeasurementUnit?.Pull is null ? [] : await features.Entities.MeasurementUnit.Pull(null).ToListAsync(),
+                        },
 
                         var s when s.StartsWith("product.") 
                             => await features.Entities.Product.Process(rpc),
@@ -158,16 +181,26 @@ public static class EndpointExtensions
 
                         _ => throw new InvalidOperationException("Method not found: " + rpc.method)
                     };
-                    
-                    await context.Response.WriteAsJsonAsync(new JtlRpcResult<object>
+
+                    var jtlResponseObj = new JtlRpcResult<object>
                     {
                         jtlrpc = "2.0",
                         id = rpc.id,
                         result = result
-                    }, _options);
+                    };
+
+                    if (logger.IsEnabled(LogLevel.Trace))
+                    {
+                        var resp = JsonSerializer.Serialize(jtlResponseObj, _options);
+                        logger.LogTrace("JtlResponse: {resp}", resp);
+                    }
+                    
+                    await context.Response.WriteAsJsonAsync(jtlResponseObj, _options);
                 }
                 catch (Exception e)
                 {
+                    logger.LogError(e, "Error processing request");
+                    
                     await context.Response.WriteAsJsonAsync(new JtlRpcResult
                     {
                         jtlrpc = "2.0",

@@ -186,7 +186,7 @@ public record Entities
     public Feature<ProductStockLevel> ProductStockLevel { get; init; }
     
     [JsonPropertyName("ProductType")]
-    public BoolFeature ProductType { get; init; }
+    public Feature<ProductType> ProductType { get; init; }
     
     [JsonPropertyName("ProductVarCombination")]
     public BoolFeature ProductVarCombination { get; init; }
@@ -222,7 +222,10 @@ public record Entities
     public BoolFeature Shipment { get; init; }
     
     [JsonPropertyName("ShippingClass")]
-    public BoolFeature ShippingClass { get; init; }
+    public Feature<ShippingClass> ShippingClass { get; init; }
+    
+    [JsonPropertyName("ShippingMethod")]
+    public Feature<ShippingMethod> ShippingMethod { get; init; }
     
     [JsonPropertyName("Specific")]
     public Feature<Specific> Specific { get; init; }
@@ -343,6 +346,7 @@ public static class EntitiesExtensions
             "ProductWarehouseInfo" => (IAckFeature)entities.ProductWarehouseInfo,
             "Shipment" => (IAckFeature)entities.Shipment,
             "ShippingClass" => (IAckFeature)entities.ShippingClass,
+            "ShippingMethod" => (IAckFeature)entities.ShippingMethod,
             "Specific" => (IAckFeature)entities.Specific,
             "SpecificI18n" => (IAckFeature)entities.SpecificI18n,
             "SpecificValue" => (IAckFeature)entities.SpecificValue,
