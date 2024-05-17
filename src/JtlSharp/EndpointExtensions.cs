@@ -74,12 +74,7 @@ public static class EndpointExtensions
                             case "connector.identify":
                                 var service2 = ActivatorUtilities.CreateInstance<T>(context.RequestServices);
 
-                                result = new JtlRpcResult<object>
-                                {
-                                    jtlrpc = "2.0",
-                                    id = rpc.id,
-                                    result = await service2.Identify()
-                                };
+                                result = await service2.Identify();
                             break;
                             case "core.connector.auth":
                                 var authentication = rpc.Read<Authentication>();
