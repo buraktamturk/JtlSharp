@@ -111,7 +111,7 @@ public static class EndpointExtensions
                                 ? await features.Entities.ProcessAck(ack, true)
                                 : await service.Clear(),
                             
-                            "globalData.pull" => new GlobalData()
+                            "global_data.pull" or "globalData.pull" => new GlobalData()
                             {
                                 currencies = features.Entities.Currency?.Pull is null ? [] : await features.Entities.Currency.Pull(null).ToListAsync(),
                                 languages = features.Entities.Language?.Pull is null ? [] : await features.Entities.Language.Pull(null).ToListAsync(),
