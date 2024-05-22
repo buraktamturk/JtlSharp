@@ -5,266 +5,271 @@ namespace JtlSharp;
 
 public record Entities
 {
-    [JsonPropertyName("Manufacturer")]
-    public Feature<Manufacturer> Manufacturer { get; init; }
-    
-    [JsonPropertyName("ManufacturerI18n")]
-    public BoolFeature ManufacturerI18n { get; init; }
-    
     [JsonPropertyName("Category")]
-    public Feature<Category> Category { get; init; }
+    public Feature<Category> Category { get; init; } = new();
     
     [JsonPropertyName("CategoryI18n")]
-    public BoolFeature CategoryI18n { get; init; }
+    public BoolFeature CategoryI18n { get; init; } = new();
     
     [JsonPropertyName("CategoryAttr")]
-    public BoolFeature CategoryAttribute { get; init; }
+    public BoolFeature CategoryAttribute { get; init; } = new();
+    
+    [JsonPropertyName("CategoryAttrI18n")]
+    public BoolFeature CategoryAttrI18n { get; init; } = new();
     
     [JsonPropertyName("CategoryCustomerGroup")]
-    public Feature<CategoryCustomerGroup> CategoryCustomerGroup { get; init; }
+    public BoolFeature CategoryCustomerGroup { get; init; } = new();
     
     [JsonPropertyName("CategoryInvisibility")]
-    public Feature<CategoryInvisibility> CategoryInvisibility { get; init; }
+    public Feature<CategoryInvisibility> CategoryInvisibility { get; init; } = new();
     
     [JsonPropertyName("ConfigGroup")]
-    public Feature<ConfigGroup> ConfigGroup { get; init; }
+    public Feature<ConfigGroup> ConfigGroup { get; init; } = new();
     
     [JsonPropertyName("ConfigGroupI18n")]
-    public BoolFeature ConfigGroupI18n { get; init; }
+    public BoolFeature ConfigGroupI18n { get; init; } = new();
     
     [JsonPropertyName("ConfigItem")]
-    public Feature<ConfigItem> ConfigItem { get; init; }
+    public Feature<ConfigItem> ConfigItem { get; init; } = new();
     
     [JsonPropertyName("ConfigItemI18n")]
-    public BoolFeature ConfigItemI18n { get; init; }
+    public BoolFeature ConfigItemI18n { get; init; } = new();
     
     [JsonPropertyName("ConfigItemPrice")]
-    public Feature<ConfigItemPrice> ConfigItemPrice { get; init; }
+    public Feature<ConfigItemPrice> ConfigItemPrice { get; init; } = new();
     
     [JsonPropertyName("CrossSelling")]
-    public Feature<CrossSelling> CrossSelling { get; init; }
+    public Feature<CrossSelling> CrossSelling { get; init; } = new();
     
     [JsonPropertyName("CrossSellingGroup")]
-    public Feature<CrossSellingGroup> CrossSellingGroup { get; init; }
+    public Feature<CrossSellingGroup> CrossSellingGroup { get; init; } = new();
     
     [JsonPropertyName("CrossSellingGroupI18n")]
-    public BoolFeature CrossSellingGroupI18n { get; init; }
+    public BoolFeature CrossSellingGroupI18n { get; init; } = new();
     
     [JsonPropertyName("CrossSellingItem")]
-    public Feature<CrossSellingItem> CrossSellingItem { get; init; }
+    public Feature<CrossSellingItem> CrossSellingItem { get; init; } = new();
     
     [JsonPropertyName("Currency")]
-    public Feature<Currency> Currency { get; init; }
+    public Feature<Currency> Currency { get; init; } = new();
     
     [JsonPropertyName("Customer")]
-    public Feature<Customer> Customer { get; init; }
+    public Feature<Customer> Customer { get; init; } = new();
+    
+    [JsonPropertyName("CustomerAttr")]
+    public BoolFeature CustomerAttr { get; init; } = new();
     
     [JsonPropertyName("CustomerGroup")]
-    public Feature<CustomerGroup> CustomerGroup { get; init; }
+    public Feature<CustomerGroup> CustomerGroup { get; init; } = new();
     
     [JsonPropertyName("CustomerGroupAttr")]
-    public BoolFeature CustomerGroupAttr { get; init; }
+    public BoolFeature CustomerGroupAttr { get; init; } = new();
     
     [JsonPropertyName("CustomerGroupI18n")]
-    public BoolFeature CustomerGroupI18n { get; init; }
+    public BoolFeature CustomerGroupI18n { get; init; } = new();
     
     [JsonPropertyName("CustomerGroupPackagingQuantity")]
-    public Feature<CustomerGroupPackagingQuantity> CustomerGroupPackagingQuantity { get; init; }
+    public Feature<CustomerGroupPackagingQuantity> CustomerGroupPackagingQuantity { get; init; } = new();
     
     [JsonPropertyName("CustomerOrder")]
-    public Feature<CustomerOrder> CustomerOrder { get; init; }
+    public Feature<CustomerOrder> CustomerOrder { get; init; } = new();
     
     [JsonPropertyName("CustomerOrderAttr")]
-    public BoolFeature CustomerOrderAttr { get; init; }
+    public BoolFeature CustomerOrderAttr { get; init; } = new();
     
     [JsonPropertyName("CustomerOrderBillingAddress")]
-    public BoolFeature CustomerOrderBillingAddress { get; init; }
+    public BoolFeature CustomerOrderBillingAddress { get; init; } = new();
     
     [JsonPropertyName("CustomerOrderItem")]
-    public BoolFeature CustomerOrderItem { get; init; }
+    public BoolFeature CustomerOrderItem { get; init; } = new();
     
     [JsonPropertyName("CustomerOrderItemVariation")]
-    public BoolFeature CustomerOrderItemVariation { get; init; }
+    public BoolFeature CustomerOrderItemVariation { get; init; } = new();
     
     [JsonPropertyName("CustomerOrderPaymentInfo")]
-    public BoolFeature CustomerOrderPaymentInfo { get; init; }
+    public BoolFeature CustomerOrderPaymentInfo { get; init; } = new();
     
     [JsonPropertyName("CustomerOrderShippingAddress")]
-    public BoolFeature CustomerOrderShippingAddress { get; init; }
+    public BoolFeature CustomerOrderShippingAddress { get; init; } = new();
     
     [JsonPropertyName("DeliveryNote")]
-    public Feature<DeliveryNote> DeliveryNote { get; init; }
+    public Feature<DeliveryNote> DeliveryNote { get; init; } = new();
     
     [JsonPropertyName("DeliveryNoteItem")]
-    public BoolFeature DeliveryNoteItem { get; init; }
+    public BoolFeature DeliveryNoteItem { get; init; } = new();
     
     [JsonPropertyName("DeliveryNoteItemInfo")]
-    public BoolFeature DeliveryNoteItemInfo { get; init; }
+    public BoolFeature DeliveryNoteItemInfo { get; init; } = new();
     
-    [JsonPropertyName("FileDownload")]
-    public Feature<ProductFileDownload> FileDownload { get; init; }
-    
-    [JsonPropertyName("FileDownloadI18n")]
-    public BoolFeature FileDownloadI18n { get; init; }
+    [JsonPropertyName("DeliveryNoteTrackingList")]
+    public BoolFeature DeliveryNoteTrackingList { get; init; } = new();
     
     [JsonPropertyName("FileUpload")]
-    public Feature<FileUpload> FileUpload { get; init; }
+    public Feature<FileUpload> FileUpload { get; init; } = new();
 
     [JsonPropertyName("FileUploadI18n")]
-    public BoolFeature FileUploadI18n { get; init; }
+    public BoolFeature FileUploadI18n { get; init; } = new();
     
     [JsonPropertyName("Image")]
-    public Feature<AbstractImage> Image { get; init; }
+    public Feature<AbstractImage> Image { get; init; } = new();
     
     [JsonPropertyName("Language")]
-    public Feature<Language> Language { get; init; }
+    public Feature<Language> Language { get; init; } = new();
+    
+    [JsonPropertyName("Manufacturer")]
+    public Feature<Manufacturer> Manufacturer { get; init; } = new();
+    
+    [JsonPropertyName("ManufacturerI18n")]
+    public BoolFeature ManufacturerI18n { get; init; } = new();
     
     [JsonPropertyName("MeasurementUnit")]
-    public Feature<MeasurementUnit> MeasurementUnit { get; init; }
+    public Feature<MeasurementUnit> MeasurementUnit { get; init; } = new();
     
     [JsonPropertyName("MeasurementUnitI18n")]
-    public BoolFeature MeasurementUnitI18n { get; init; }
-    
-    [JsonPropertyName("MediaFile")]
-    public Feature<ProductMediaFile> MediaFile { get; init; }
-    
-    [JsonPropertyName("MediaFileAttr")]
-    public BoolFeature MediaFileAttr { get; init; }
-    
-    [JsonPropertyName("MediaFileAttrI18n")]
-    public BoolFeature MediaFileAttrI18n { get; init; }
+    public BoolFeature MeasurementUnitI18n { get; init; } = new();
     
     [JsonPropertyName("PartsList")]
-    public Feature<PartsList> PartsList { get; init; }
+    public Feature<PartsList> PartsList { get; init; } = new();
     
     [JsonPropertyName("Payment")]
-    public Feature<Payment> Payment { get; init; }
+    public Feature<Payment> Payment { get; init; } = new();
     
     [JsonPropertyName("Product")]
-    public Feature<Product> Product { get; init; }
-    
+    public Feature<Product> Product { get; init; } = new();
+
     [JsonPropertyName("Product2Category")]
-    public BoolFeature Product2Category { get; init; }
+    public BoolFeature Product2Category { get; init; } = new();
     
     [JsonPropertyName("ProductAttr")]
-    public BoolFeature ProductAttr { get; init; }
+    public BoolFeature ProductAttr { get; init; } = new();
     
     [JsonPropertyName("ProductAttrI18n")]
-    public BoolFeature ProductAttrI18n { get; init; }
+    public BoolFeature ProductAttrI18n { get; init; } = new();
     
     [JsonPropertyName("ProductConfigGroup")]
-    public BoolFeature ProductConfigGroup { get; init; }
+    public BoolFeature ProductConfigGroup { get; init; } = new();
     
     [JsonPropertyName("ProductFileDownload")]
-    public BoolFeature ProductFileDownload { get; init; }
+    public BoolFeature ProductFileDownload { get; init; } = new();
+    
+    [JsonPropertyName("ProductFileDownloadI18n")]
+    public BoolFeature ProductFileDownloadI18n { get; init; } = new();
+
     
     [JsonPropertyName("ProductI18n")]
-    public BoolFeature ProductI18n { get; init; }
+    public BoolFeature ProductI18n { get; init; } = new();
+
     
     [JsonPropertyName("ProductInvisibility")]
-    public BoolFeature ProductInvisibility { get; init; }
+    public BoolFeature ProductInvisibility { get; init; } = new();
+    
+    [JsonPropertyName("ProductMediaFile")]
+    public Feature<ProductMediaFile> MediaFile { get; init; } = new();
+    
+    [JsonPropertyName("ProductMediaFileAttr")]
+    public BoolFeature ProductMediaFileAttr { get; init; } = new();
+    
+    [JsonPropertyName("ProductMediaFileI18n")]
+    public BoolFeature ProductMediaFileI18n { get; init; } = new();
     
     [JsonPropertyName("ProductPartsList")]
-    public BoolFeature ProductPartsList { get; init; }
-    
+    public BoolFeature ProductPartsList { get; init; } = new();
+
     [JsonPropertyName("ProductPrice")]
-    public Feature<ProductPrice> ProductPrice { get; init; }
-    
+    public Feature<ProductPrice> ProductPrice { get; init; } = new();
+
     [JsonPropertyName("ProductPriceItem")]
-    public BoolFeature ProductPriceItem { get; init; }
-    
+    public BoolFeature ProductPriceItem { get; init; } = new();
+
     [JsonPropertyName("ProductSpecialPrice")]
-    public BoolFeature ProductSpecialPrice { get; init; }
+    public BoolFeature ProductSpecialPrice { get; init; } = new();
     
     [JsonPropertyName("ProductSpecialPriceItem")]
-    public BoolFeature ProductSpecialPriceItem { get; init; }
-    
+    public BoolFeature ProductSpecialPriceItem { get; init; } = new();
+
     [JsonPropertyName("ProductSpecific")]
-    public BoolFeature ProductSpecific { get; init; }
-    
+    public BoolFeature ProductSpecific { get; init; } = new();
+
     [JsonPropertyName("ProductStockLevel")]
-    public Feature<ProductStockLevel> ProductStockLevel { get; init; }
-    
+    public BoolFeature ProductStockLevel { get; init; } = new();
+
     [JsonPropertyName("ProductType")]
-    public Feature<ProductType> ProductType { get; init; }
+    public Feature<ProductType> ProductType { get; init; } = new();
     
     [JsonPropertyName("ProductVarCombination")]
-    public BoolFeature ProductVarCombination { get; init; }
+    public BoolFeature ProductVarCombination { get; init; } = new();
     
     [JsonPropertyName("ProductVariation")]
-    public BoolFeature ProductVariation { get; init; }
+    public BoolFeature ProductVariation { get; init; } = new();
     
     [JsonPropertyName("ProductVariationI18n")]
-    public BoolFeature ProductVariationI18n { get; init; }
+    public BoolFeature ProductVariationI18n { get; init; } = new();
     
     [JsonPropertyName("ProductVariationInvisibility")]
-    public BoolFeature ProductVariationInvisibility { get; init; }
+    public BoolFeature ProductVariationInvisibility { get; init; } = new();
     
     [JsonPropertyName("ProductVariationValue")]
-    public BoolFeature ProductVariationValue { get; init; }
+    public BoolFeature ProductVariationValue { get; init; } = new();
     
     [JsonPropertyName("ProductVariationValueDependency")]
-    public BoolFeature ProductVariationValueDependency { get; init; }
+    public BoolFeature ProductVariationValueDependency { get; init; } = new();
     
     [JsonPropertyName("ProductVariationValueExtraCharge")]
-    public BoolFeature ProductVariationValueExtraCharge { get; init; }
+    public BoolFeature ProductVariationValueExtraCharge { get; init; } = new();
     
     [JsonPropertyName("ProductVariationValueI18n")]
-    public BoolFeature ProductVariationValueI18n { get; init; }
+    public BoolFeature ProductVariationValueI18n { get; init; } = new();
     
     [JsonPropertyName("ProductVariationValueInvisibility")]
-    public BoolFeature ProductVariationValueInvisibility { get; init; }
+    public BoolFeature ProductVariationValueInvisibility { get; init; } = new();
     
     [JsonPropertyName("ProductWarehouseInfo")]
-    public BoolFeature ProductWarehouseInfo { get; init; }
+    public BoolFeature ProductWarehouseInfo { get; init; } = new();
     
     [JsonPropertyName("Shipment")]
-    public BoolFeature Shipment { get; init; }
+    public BoolFeature Shipment { get; init; } = new();
     
     [JsonPropertyName("ShippingClass")]
-    public Feature<ShippingClass> ShippingClass { get; init; }
+    public Feature<ShippingClass> ShippingClass { get; init; } = new();
     
     [JsonPropertyName("ShippingMethod")]
-    public Feature<ShippingMethod> ShippingMethod { get; init; }
+    public Feature<ShippingMethod> ShippingMethod { get; init; } = new();
     
     [JsonPropertyName("Specific")]
-    public Feature<Specific> Specific { get; init; }
+    public Feature<Specific> Specific { get; init; } = new();
     
     [JsonPropertyName("SpecificI18n")]
-    public BoolFeature SpecificI18n { get; init; }
+    public BoolFeature SpecificI18n { get; init; } = new();
     
     [JsonPropertyName("SpecificValue")]
-    public BoolFeature SpecificValue { get; init; }
+    public AckBoolFeature SpecificValue { get; init; } = new();
     
     [JsonPropertyName("SpecificValueI18n")]
-    public BoolFeature SpecificValueI18n { get; init; }
-    
-    [JsonPropertyName("Statistic")]
-    public BoolFeature Statistic { get; init; }
+    public BoolFeature SpecificValueI18n { get; init; } = new();
     
     [JsonPropertyName("StatusChange")]
-    public Feature<StatusChange> StatusChange { get; init; }
+    public Feature<StatusChange> StatusChange { get; init; } = new();
     
     [JsonPropertyName("TaxClass")]
-    public Feature<TaxClass> TaxClass { get; init; }
+    public Feature<TaxClass> TaxClass { get; init; } = new();
     
     [JsonPropertyName("TaxRate")]
-    public Feature<TaxRate> TaxRate { get; init; }
+    public Feature<TaxRate> TaxRate { get; init; } = new();
     
     [JsonPropertyName("TaxZone")]
-    public Feature<TaxZone> TaxZone { get; init; }
+    public Feature<TaxZone> TaxZone { get; init; } = new();
     
     [JsonPropertyName("TaxZoneCountry")]
-    public BoolFeature TaxZoneCountry { get; init; }
+    public BoolFeature TaxZoneCountry { get; init; } = new();
     
     [JsonPropertyName("Unit")]
-    public Feature<Unit> Unit { get; init; }
+    public Feature<Unit> Unit { get; init; } = new();
     
     [JsonPropertyName("UnitI18n")]
-    public BoolFeature UnitI18n { get; init; }
+    public BoolFeature UnitI18n { get; init; } = new();
     
     [JsonPropertyName("Warehouse")]
-    public Feature<Warehouse> Warehouse { get; init; }
+    public Feature<Warehouse> Warehouse { get; init; } = new();
 }
 
 public static class EntitiesExtensions
@@ -273,94 +278,94 @@ public static class EntitiesExtensions
     {
         return type switch
         {
-            "Manufacturer" => (IAckFeature)entities.Manufacturer,
-            "ManufacturerI18n" => (IAckFeature)entities.ManufacturerI18n,
-            "Category" => (IAckFeature)entities.Category,
-            "CategoryI18n" => (IAckFeature)entities.CategoryI18n,
-            "CategoryAttr" => (IAckFeature)entities.CategoryAttribute,
-            "CategoryCustomerGroup" => (IAckFeature)entities.CategoryCustomerGroup,
-            "CategoryInvisibility" => (IAckFeature)entities.CategoryInvisibility,
-            "ConfigGroup" => (IAckFeature)entities.ConfigGroup,
-            "ConfigGroupI18n" => (IAckFeature)entities.ConfigGroupI18n,
-            "ConfigItem" => (IAckFeature)entities.ConfigItem,
-            "ConfigItemI18n" => (IAckFeature)entities.ConfigItemI18n,
-            "ConfigItemPrice" => (IAckFeature)entities.ConfigItemPrice,
-            "CrossSelling" => (IAckFeature)entities.CrossSelling,
-            "CrossSellingGroup" => (IAckFeature)entities.CrossSellingGroup,
-            "CrossSellingGroupI18n" => (IAckFeature)entities.CrossSellingGroupI18n,
-            "CrossSellingItem" => (IAckFeature)entities.CrossSellingItem,
-            "Currency" => (IAckFeature)entities.Currency,
-            "Customer" => (IAckFeature)entities.Customer,
-            "CustomerGroup" => (IAckFeature)entities.CustomerGroup,
-            "CustomerGroupAttr" => (IAckFeature)entities.CustomerGroupAttr,
-            "CustomerGroupI18n" => (IAckFeature)entities.CustomerGroupI18n,
-            "CustomerGroupPackagingQuantity" => (IAckFeature)entities.CustomerGroupPackagingQuantity,
-            "CustomerOrder" => (IAckFeature)entities.CustomerOrder,
-            "CustomerOrderAttr" => (IAckFeature)entities.CustomerOrderAttr,
-            "CustomerOrderBillingAddress" => (IAckFeature)entities.CustomerOrderBillingAddress,
-            "CustomerOrderItem" => (IAckFeature)entities.CustomerOrderItem,
-            "CustomerOrderItemVariation" => (IAckFeature)entities.CustomerOrderItemVariation,
-            "CustomerOrderPaymentInfo" => (IAckFeature)entities.CustomerOrderPaymentInfo,
-            "CustomerOrderShippingAddress" => (IAckFeature)entities.CustomerOrderShippingAddress,
-            "DeliveryNote" => (IAckFeature)entities.DeliveryNote,
-            "DeliveryNoteItem" => (IAckFeature)entities.DeliveryNoteItem,
-            "DeliveryNoteItemInfo" => (IAckFeature)entities.DeliveryNoteItemInfo,
-            "FileDownload" => (IAckFeature)entities.FileDownload,
-            "FileDownloadI18n" => (IAckFeature)entities.FileDownloadI18n,
-            "FileUpload" => (IAckFeature)entities.FileUpload,
-            "FileUploadI18n" => (IAckFeature)entities.FileUploadI18n,
-            "Image" => (IAckFeature)entities.Image,
-            "Language" => (IAckFeature)entities.Language,
-            "MeasurementUnit" => (IAckFeature)entities.MeasurementUnit,
-            "MeasurementUnitI18n" => (IAckFeature)entities.MeasurementUnitI18n,
-            "MediaFile" => (IAckFeature)entities.MediaFile,
-            "MediaFileAttr" => (IAckFeature)entities.MediaFileAttr,
-            "MediaFileAttrI18n" => (IAckFeature)entities.MediaFileAttrI18n,
-            "PartsList" => (IAckFeature)entities.PartsList,
-            "Payment" => (IAckFeature)entities.Payment,
-            "Product" => (IAckFeature)entities.Product,
-            "Product2Category" => (IAckFeature)entities.Product2Category,
-            "ProductAttr" => (IAckFeature)entities.ProductAttr,
-            "ProductAttrI18n" => (IAckFeature)entities.ProductAttrI18n,
-            "ProductConfigGroup" => (IAckFeature)entities.ProductConfigGroup,
-            "ProductFileDownload" => (IAckFeature)entities.ProductFileDownload,
-            "ProductI18n" => (IAckFeature)entities.ProductI18n,
-            "ProductInvisibility" => (IAckFeature)entities.ProductInvisibility,
-            "ProductPartsList" => (IAckFeature)entities.ProductPartsList,
-            "ProductPrice" => (IAckFeature)entities.ProductPrice,
-            "ProductPriceItem" => (IAckFeature)entities.ProductPriceItem,
-            "ProductSpecialPrice" => (IAckFeature)entities.ProductSpecialPrice,
-            "ProductSpecialPriceItem" => (IAckFeature)entities.ProductSpecialPriceItem,
-            "ProductSpecific" => (IAckFeature)entities.ProductSpecific,
-            "ProductStockLevel" => (IAckFeature)entities.ProductStockLevel,
-            "ProductType" => (IAckFeature)entities.ProductType,
-            "ProductVarCombination" => (IAckFeature)entities.ProductVarCombination,
-            "ProductVariation" => (IAckFeature)entities.ProductVariation,
-            "ProductVariationI18n" => (IAckFeature)entities.ProductVariationI18n,
-            "ProductVariationInvisibility" => (IAckFeature)entities.ProductVariationInvisibility,
-            "ProductVariationValue" => (IAckFeature)entities.ProductVariationValue,
-            "ProductVariationValueDependency" => (IAckFeature)entities.ProductVariationValueDependency,
-            "ProductVariationValueExtraCharge" => (IAckFeature)entities.ProductVariationValueExtraCharge,
-            "ProductVariationValueI18n" => (IAckFeature)entities.ProductVariationValueI18n,
-            "ProductVariationValueInvisibility" => (IAckFeature)entities.ProductVariationValueInvisibility,
-            "ProductWarehouseInfo" => (IAckFeature)entities.ProductWarehouseInfo,
-            "Shipment" => (IAckFeature)entities.Shipment,
-            "ShippingClass" => (IAckFeature)entities.ShippingClass,
-            "ShippingMethod" => (IAckFeature)entities.ShippingMethod,
-            "Specific" => (IAckFeature)entities.Specific,
-            "SpecificI18n" => (IAckFeature)entities.SpecificI18n,
-            "SpecificValue" => (IAckFeature)entities.SpecificValue,
-            "SpecificValueI18n" => (IAckFeature)entities.SpecificValueI18n,
-            "Statistic" => (IAckFeature)entities.Statistic,
-            "StatusChange" => (IAckFeature)entities.StatusChange,
-            "TaxClass" => (IAckFeature)entities.TaxClass,
-            "TaxRate" => (IAckFeature)entities.TaxRate,
-            "TaxZone" => (IAckFeature)entities.TaxZone,
-            "TaxZoneCountry" => (IAckFeature)entities.TaxZoneCountry,
-            "Unit" => (IAckFeature)entities.Unit,
-            "UnitI18n" => (IAckFeature)entities.UnitI18n,
-            "Warehouse" => (IAckFeature)entities.Warehouse,
-            _ => throw new NotImplementedException()
+            "manufacturer" => (IAckFeature)entities.Manufacturer,
+            //"manufacturerI18n" => (IAckFeature)entities.ManufacturerI18n,
+            "category" => (IAckFeature)entities.Category,
+            //"categoryI18n" => (IAckFeature)entities.CategoryI18n,
+            //"categoryAttr" => (IAckFeature)entities.CategoryAttribute,
+            "categoryCustomerGroup" => (IAckFeature)entities.CategoryCustomerGroup,
+            "categoryInvisibility" => (IAckFeature)entities.CategoryInvisibility,
+            "configGroup" => (IAckFeature)entities.ConfigGroup,
+            //"configGroupI18n" => (IAckFeature)entities.ConfigGroupI18n,
+            "configItem" => (IAckFeature)entities.ConfigItem,
+            //"configItemI18n" => (IAckFeature)entities.ConfigItemI18n,
+            "configItemPrice" => (IAckFeature)entities.ConfigItemPrice,
+            "crossSelling" => (IAckFeature)entities.CrossSelling,
+            "crossSellingGroup" => (IAckFeature)entities.CrossSellingGroup,
+            //"crossSellingGroupI18n" => (IAckFeature)entities.CrossSellingGroupI18n,
+            "crossSellingItem" => (IAckFeature)entities.CrossSellingItem,
+            "currency" => (IAckFeature)entities.Currency,
+            "customer" => (IAckFeature)entities.Customer,
+            "customerGroup" => (IAckFeature)entities.CustomerGroup,
+            //"customerGroupAttr" => (IAckFeature)entities.CustomerGroupAttr,
+            //"customerGroupI18n" => (IAckFeature)entities.CustomerGroupI18n,
+            "customerGroupPackagingQuantity" => (IAckFeature)entities.CustomerGroupPackagingQuantity,
+            "customerOrder" => (IAckFeature)entities.CustomerOrder,
+            //"customerOrderAttr" => (IAckFeature)entities.CustomerOrderAttr,
+            //"customerOrderBillingAddress" => (IAckFeature)entities.CustomerOrderBillingAddress,
+            //"customerOrderItem" => (IAckFeature)entities.CustomerOrderItem,
+            //"customerOrderItemVariation" => (IAckFeature)entities.CustomerOrderItemVariation,
+            //"customerOrderPaymentInfo" => (IAckFeature)entities.CustomerOrderPaymentInfo,
+            //"customerOrderShippingAddress" => (IAckFeature)entities.CustomerOrderShippingAddress,
+            "deliveryNote" => (IAckFeature)entities.DeliveryNote,
+            //"deliveryNoteItem" => (IAckFeature)entities.DeliveryNoteItem,
+            //"deliveryNoteItemInfo" => (IAckFeature)entities.DeliveryNoteItemInfo,
+            //"fileDownload" => (IAckFeature)entities.FileDownload,
+            //"fileDownloadI18n" => (IAckFeature)entities.FileDownloadI18n,
+            "fileUpload" => (IAckFeature)entities.FileUpload,
+            //"fileUploadI18n" => (IAckFeature)entities.FileUploadI18n,
+            "image" => (IAckFeature)entities.Image,
+            "language" => (IAckFeature)entities.Language,
+            "measurementUnit" => (IAckFeature)entities.MeasurementUnit,
+            //"measurementUnitI18n" => (IAckFeature)entities.MeasurementUnitI18n,
+            "mediaFile" => (IAckFeature)entities.MediaFile,
+            //"mediaFileAttr" => (IAckFeature)entities.MediaFileAttr,
+            //"mediaFileAttrI18n" => (IAckFeature)entities.MediaFileAttrI18n,
+            "partsList" => (IAckFeature)entities.PartsList,
+            "payment" => (IAckFeature)entities.Payment,
+            "product" => (IAckFeature)entities.Product,
+            //"product2Category" => (IAckFeature)entities.Product2Category,
+            //"productAttr" => (IAckFeature)entities.ProductAttr,
+            //"productAttrI18n" => (IAckFeature)entities.ProductAttrI18n,
+            //"productConfigGroup" => (IAckFeature)entities.ProductConfigGroup,
+            //"productFileDownload" => (IAckFeature)entities.ProductFileDownload,
+            //"productI18n" => (IAckFeature)entities.ProductI18n,
+            //"productInvisibility" => (IAckFeature)entities.ProductInvisibility,
+            //"productPartsList" => (IAckFeature)entities.ProductPartsList,
+            //"productPrice" => (IAckFeature)entities.ProductPrice,
+            //"productPriceItem" => (IAckFeature)entities.ProductPriceItem,
+            //"productSpecialPrice" => (IAckFeature)entities.ProductSpecialPrice,
+            //"productSpecialPriceItem" => (IAckFeature)entities.ProductSpecialPriceItem,
+            //"productSpecific" => (IAckFeature)entities.ProductSpecific,
+            "productStockLevel" => (IAckFeature)entities.ProductStockLevel,
+            "productType" => (IAckFeature)entities.ProductType,
+            //"productVarCombination" => (IAckFeature)entities.ProductVarCombination,
+            //"productVariation" => (IAckFeature)entities.ProductVariation,
+            //"productVariationI18n" => (IAckFeature)entities.ProductVariationI18n,
+            //"productVariationInvisibility" => (IAckFeature)entities.ProductVariationInvisibility,
+            //"productVariationValue" => (IAckFeature)entities.ProductVariationValue,
+            //"productVariationValueDependency" => (IAckFeature)entities.ProductVariationValueDependency,
+            //"productVariationValueExtraCharge" => (IAckFeature)entities.ProductVariationValueExtraCharge,
+            //"productVariationValueI18n" => (IAckFeature)entities.ProductVariationValueI18n,
+            //"productVariationValueInvisibility" => (IAckFeature)entities.ProductVariationValueInvisibility,
+            //"productWarehouseInfo" => (IAckFeature)entities.ProductWarehouseInfo,
+            //"shipment" => (IAckFeature)entities.Shipment,
+            "shippingClass" => (IAckFeature)entities.ShippingClass,
+            "shippingMethod" => (IAckFeature)entities.ShippingMethod,
+            "specific" => (IAckFeature)entities.Specific,
+            //"specificI18n" => (IAckFeature)entities.SpecificI18n,
+            "specificValue" => (IAckFeature)entities.SpecificValue,
+            //"specificValueI18n" => (IAckFeature)entities.SpecificValueI18n,
+            //"statistic" => (IAckFeature)entities.Statistic,
+            "statusChange" => (IAckFeature)entities.StatusChange,
+            "taxClass" => (IAckFeature)entities.TaxClass,
+            "taxRate" => (IAckFeature)entities.TaxRate,
+            "taxZone" => (IAckFeature)entities.TaxZone,
+            //"taxZoneCountry" => (IAckFeature)entities.TaxZoneCountry,
+            "unit" => (IAckFeature)entities.Unit,
+            //"unitI18n" => (IAckFeature)entities.UnitI18n,
+            "warehouse" => (IAckFeature)entities.Warehouse,
+            _ => throw new NotImplementedException($"Unknown entity type for ACK: {type}")
         };
     }
 
@@ -368,7 +373,7 @@ public static class EntitiesExtensions
     {
         foreach (var (key, value) in ack.identities)
         {
-            await entities.GetAckFeature(key).Ack?.Invoke(value, false);
+            await entities.GetAckFeature(key).Ack?.Invoke(value, isClear);
         }
 
         return true;

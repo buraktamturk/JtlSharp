@@ -62,8 +62,9 @@ public class SampleJtlService : IJtlService
         return new ConnectorIdentification()
         {
             endpointVersion = "2.0",
-            platformName = "JtlSharp",
-            protocolVersion = 2,
+            platformVersion = "",
+            platformName = "Bulk",
+            protocolVersion = 7,
             serverInfo = new ConnectorServerInfo()
             {
                 executionTime = 600,

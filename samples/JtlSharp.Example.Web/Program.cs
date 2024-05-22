@@ -13,7 +13,7 @@ app
     .UseRouting()
     .UseEndpoints(endpoints =>
     {
-        endpoints.UseJtl<SampleJtlService>("my-token");
+        endpoints.UseJtl<SampleJtlService>("Test1234");
     });
 
 app.Run();

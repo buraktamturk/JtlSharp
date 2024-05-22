@@ -12,5 +12,6 @@ public record Identity : AbstractModel
     /// </summary>
     public int? host { get; init; }
 
+    public static readonly Identity Empty = new Identity() { endpoint = string.Empty, host = 0 };
 }
 

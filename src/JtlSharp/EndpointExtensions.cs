@@ -1,6 +1,6 @@
 ﻿using System.IO.Compression;
-using System.Net.Http.Json;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using Jtl.Connector.Core.Model;
 using JtlSharp.Converter;
 using Microsoft.AspNetCore.Builder;
@@ -27,7 +27,19 @@ public static class EndpointExtensions
     {
         return rpc.@params is {} node ? node.Deserialize<T>(_options) : null;
     }
-    
+
+    private static async Task<object> Process(this Feature<AbstractImage> feature, JtlRpc rpc, ZipArchive archive)
+    {
+        return rpc.method.Split('.').Last() switch
+        {
+            "push" => await rpc.Read<IReadOnlyCollection<AbstractImage>>()
+                .ToAsyncEnumerable()
+                .SelectAwait(async (a, t) => await feature.Push(new ZipImage(a, archive!)))
+                .ToListAsync(),
+            _ => await feature.Process(rpc)
+        };
+    }
+
     private static async Task<object> Process<T>(this Feature<T> feature, JtlRpc rpc) where T : AbstractModel
     {
         return rpc.method.Split('.').Last() switch
@@ -37,6 +49,7 @@ public static class EndpointExtensions
                 .ToAsyncEnumerable()
                 .SelectAwait(async (a, t) => await feature.Push(a))
                 .ToListAsync(),
+            "delete" => await feature.Delete<T>(rpc),
             "statistic" => new
             {
                 available = await feature.Statistics(),
@@ -44,6 +57,13 @@ public static class EndpointExtensions
             },
             _ => throw new InvalidOperationException("Method not found: " + rpc.method)
         };
+    }
+
+    private static async Task<JsonNode> Delete<T>(this Feature<T> feature, JtlRpc rpc) where T : AbstractModel
+    {
+        var input = rpc.Read<IReadOnlyCollection<AbstractIdentity>>();
+        await feature.Delete(input.Select(b => b.id).ToList());
+        return rpc.@params;
     }
     
     public static IEndpointRouteBuilder UseJtl<T>(this IEndpointRouteBuilder app, string token, string basePath = "/jtl")
@@ -66,7 +86,7 @@ public static class EndpointExtensions
                 
                 try
                 {
-                    object result;
+                    object result = null;
                     
                     if (!form.TryGetValue("jtlauth", out var jtlauth)) {
                         switch (rpc.method)
@@ -87,12 +107,13 @@ public static class EndpointExtensions
                                     lifetime = 3600
                                 };
                             break;
-                            default:
-                                throw new InvalidOperationException("Not authenticated for action: " + rpc.method);
+                                //throw new InvalidOperationException("Not authenticated for action: " + rpc.method);
                         }
-                    } else {
+                    } 
+                    
+                    if (result is null) {
                         // token control
-
+                        
                         await using var zipFileStream =  form.Files.Count > 0 ? form.Files[0].OpenReadStream() : null;
                         using var zipFile = zipFileStream is null ? null : new ZipArchive(zipFileStream);
                         
@@ -100,7 +121,7 @@ public static class EndpointExtensions
                         
                         var features = service.GetFeatures();
                         
-                        result = rpc.method switch
+                        result = rpc.method.ToLowerInvariant() switch
                         {
                             "core.connector.features" => features,
                             "core.connector.ack" => await features.Entities.ProcessAck(rpc.Read<Ack>()!),
@@ -111,7 +132,7 @@ public static class EndpointExtensions
                                 ? await features.Entities.ProcessAck(ack, true)
                                 : await service.Clear(),
                             
-                            "global_data.pull" or "globalData.pull" => new GlobalData()
+                            "global_data.pull" or "globaldata.pull" => Enumerable.Repeat(new GlobalData()
                             {
                                 currencies = features.Entities.Currency?.Pull is null ? [] : await features.Entities.Currency.Pull(null).ToListAsync(),
                                 languages = features.Entities.Language?.Pull is null ? [] : await features.Entities.Language.Pull(null).ToListAsync(),
@@ -126,7 +147,7 @@ public static class EndpointExtensions
                                 configItems = features.Entities.ConfigItem?.Pull is null ? [] : await features.Entities.ConfigItem.Pull(null).ToListAsync(),
                                 customerGroups = features.Entities.CustomerGroup?.Pull is null ? [] : await features.Entities.CustomerGroup.Pull(null).ToListAsync(),
                                 measurementUnits = features.Entities.MeasurementUnit?.Pull is null ? [] : await features.Entities.MeasurementUnit.Pull(null).ToListAsync(),
-                            },
+                            }, 1),
 
                             var s when s.StartsWith("product.") 
                                 => await features.Entities.Product.Process(rpc),
@@ -138,41 +159,41 @@ public static class EndpointExtensions
                                 => await features.Entities.Currency.Process(rpc),
                             var s when s.StartsWith("customer.") 
                                 => await features.Entities.Customer.Process(rpc),
-                            var s when s.StartsWith("customerGroup.") 
+                            var s when s.StartsWith("customergroup.") 
                                 => await features.Entities.CustomerGroup.Process(rpc),
-                            var s when s.StartsWith("customerOrder.") 
+                            var s when s.StartsWith("customerorder.")
                                 => await features.Entities.CustomerOrder.Process(rpc),
-                            var s when s.StartsWith("deliveryNote.") 
+                            var s when s.StartsWith("deliverynote.") 
                                 => await features.Entities.DeliveryNote.Process(rpc),
-                            var s when s.StartsWith("fileDownload.") 
-                                => await features.Entities.FileDownload.Process(rpc),
-                            var s when s.StartsWith("fileUpload.") 
+                            //var s when s.StartsWith("fileDownload.") 
+                            //    => await features.Entities.FileDownload.Process(rpc),
+                            var s when s.StartsWith("fileupload.") 
                                 => await features.Entities.FileUpload.Process(rpc),
                             var s when s.StartsWith("image.") 
-                                => await features.Entities.Image.Process(rpc),
+                                => await features.Entities.Image.Process(rpc, zipFile),
                             var s when s.StartsWith("language.") 
                                 => await features.Entities.Language.Process(rpc),
-                            var s when s.StartsWith("measurementUnit.") 
+                            var s when s.StartsWith("measurementunit.") 
                                 => await features.Entities.MeasurementUnit.Process(rpc),
-                            var s when s.StartsWith("mediaFile.") 
+                            var s when s.StartsWith("mediafile.") 
                                 => await features.Entities.MediaFile.Process(rpc),
-                            var s when s.StartsWith("partsList.") 
+                            var s when s.StartsWith("partslist.") 
                                 => await features.Entities.PartsList.Process(rpc),
                             var s when s.StartsWith("payment.") 
                                 => await features.Entities.Payment.Process(rpc),
-                            var s when s.StartsWith("productPrice.") 
+                            var s when s.StartsWith("productprice.") 
                                 => await features.Entities.ProductPrice.Process(rpc),
-                            var s when s.StartsWith("productStockLevel.") 
-                                => await features.Entities.ProductStockLevel.Process(rpc),
+                            //var s when s.StartsWith("productstocklevel.") 
+                            //    => await features.Entities.ProductStockLevel.Process(rpc),
                             var s when s.StartsWith("specific.") 
                                 => await features.Entities.Specific.Process(rpc),
-                            var s when s.StartsWith("statusChange.") 
+                            var s when s.StartsWith("statuschange.") 
                                 => await features.Entities.StatusChange.Process(rpc),
-                            var s when s.StartsWith("taxClass.") 
+                            var s when s.StartsWith("taxclass.") 
                                 => await features.Entities.TaxClass.Process(rpc),
-                            var s when s.StartsWith("taxRate.") 
+                            var s when s.StartsWith("taxrate.") 
                                 => await features.Entities.TaxRate.Process(rpc),
-                            var s when s.StartsWith("taxZone.") 
+                            var s when s.StartsWith("taxzone.") 
                                 => await features.Entities.TaxZone.Process(rpc),
                             var s when s.StartsWith("unit.") 
                                 => await features.Entities.Unit.Process(rpc),
@@ -202,7 +223,7 @@ public static class EndpointExtensions
                 {
                     logger.LogError(e, "Error processing request");
                     
-                    await context.Response.WriteAsJsonAsync(new JtlRpcResult
+                    await context.Response.WriteAsJsonAsync(new JtlRpcErrorResult
                     {
                         jtlrpc = "2.0",
                         id = rpc.id,
@@ -211,7 +232,7 @@ public static class EndpointExtensions
                             code = 790,
                             message = e.Message
                         }
-                    });
+                    }, _options);
                 }
             })
             .ExcludeFromDescription();

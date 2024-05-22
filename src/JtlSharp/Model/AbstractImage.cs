@@ -31,6 +31,13 @@ public record AbstractImage : AbstractIdentity
     /// integer
     /// </summary>
     public int? sort { get; init; }
+    
+    public string relationType { get; init; }
 
+    public virtual bool CanOpen()
+        => false;
+    
+    public virtual Stream OpenStream(out long length, out string? mimeType)
+        => throw new NotImplementedException();
 }
 

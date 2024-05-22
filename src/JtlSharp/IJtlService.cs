@@ -30,7 +30,7 @@ public record Feature<T> : IAckFeature
     public Func<T, Task<T>>? Push { get; init; }
     
     [JsonIgnore]
-    public Func<Identities, Task>? Delete { get; init; }
+    public Func<IReadOnlyCollection<Identity>, Task>? Delete { get; init; }
     
     [JsonIgnore]
     public Func<Task<int>>? Statistics { get; init; }

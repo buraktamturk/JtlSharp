@@ -19,13 +19,20 @@ public record JtlRpcResult
     public string jtlrpc { get; init; }
     
     public string id { get; init; }
-    
-    public JtlRpcError? error { get; init; }
+}
+
+public record JtlRpcErrorResult : JtlRpcResult
+{
+    public int? result => null;
+
+    public JtlRpcError error { get; init; }
 }
 
 public record JtlRpcResult<T> : JtlRpcResult
 {
     public T result { get; init; }
+
+    public JtlRpcError? error => null;
 }
 
 public record JtlRpcError
