@@ -8,7 +8,8 @@ public class DateTimeOffsetConverter : JsonConverter<DateTimeOffset?>
 {
     public override DateTimeOffset? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        // parse 0001-01-01T00:00:00\u002B01:00
+        // parse 0001-01-01T00:00:00+01:00 or 2024-05-23T12:45:11Z
+        
         if (reader.TokenType == JsonTokenType.Null)
             return null;
         
@@ -19,7 +20,7 @@ public class DateTimeOffsetConverter : JsonConverter<DateTimeOffset?>
         if (str.StartsWith("0001"))
             return null;
         
-        return DateTimeOffset.ParseExact(str, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
+        return DateTimeOffset.Parse(str, CultureInfo.InvariantCulture);
     }
 
     public override void Write(Utf8JsonWriter writer, DateTimeOffset? value, JsonSerializerOptions options)

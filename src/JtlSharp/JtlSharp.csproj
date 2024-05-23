@@ -16,6 +16,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="HT.ISO" Version="7.0.0" />
+      <PackageReference Include="NLanguageTag" Version="4.0.0" />
       <PackageReference Include="System.Linq.Async" Version="6.0.1" />
     </ItemGroup>
 
