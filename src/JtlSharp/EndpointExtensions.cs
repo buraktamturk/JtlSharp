@@ -181,8 +181,8 @@ public static class EndpointExtensions
                                 => await features.Entities.PartsList.Process(rpc),
                             var s when s.StartsWith("payment.") 
                                 => await features.Entities.Payment.Process(rpc),
-                            var s when s.StartsWith("productprice.") 
-                                => await features.Entities.ProductPrice.Process(rpc),
+                            //var s when s.StartsWith("productprice.") 
+                            //    => await features.Entities.ProductPrice.Process(rpc),
                             //var s when s.StartsWith("productstocklevel.") 
                             //    => await features.Entities.ProductStockLevel.Process(rpc),
                             var s when s.StartsWith("specific.") 
@@ -199,6 +199,8 @@ public static class EndpointExtensions
                                 => await features.Entities.Unit.Process(rpc),
                             var s when s.StartsWith("warehouse.") 
                                 => await features.Entities.Warehouse.Process(rpc),
+                            var s when s.StartsWith("crossselling.") || s.StartsWith("cross_selling.")
+                                => await features.Entities.CrossSelling.Process(rpc),
 
                             _ => throw new InvalidOperationException("Method not found: " + rpc.method)
                         };

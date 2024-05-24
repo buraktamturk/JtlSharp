@@ -48,7 +48,7 @@ public record Entities
     public BoolFeature CrossSellingGroupI18n { get; init; } = new();
     
     [JsonPropertyName("CrossSellingItem")]
-    public Feature<CrossSellingItem> CrossSellingItem { get; init; } = new();
+    public BoolFeature CrossSellingItem { get; init; } = new();
     
     [JsonPropertyName("Currency")]
     public Feature<Currency> Currency { get; init; } = new();
@@ -169,6 +169,9 @@ public record Entities
     [JsonPropertyName("ProductMediaFileAttr")]
     public BoolFeature ProductMediaFileAttr { get; init; } = new();
     
+    [JsonPropertyName("ProductMediaFileAttrI18n")]
+    public BoolFeature ProductMediaFileAttrI18n { get; init; } = new();
+    
     [JsonPropertyName("ProductMediaFileI18n")]
     public BoolFeature ProductMediaFileI18n { get; init; } = new();
     
@@ -176,7 +179,7 @@ public record Entities
     public BoolFeature ProductPartsList { get; init; } = new();
 
     [JsonPropertyName("ProductPrice")]
-    public Feature<ProductPrice> ProductPrice { get; init; } = new();
+    public BoolFeature ProductPrice { get; init; } = new();
 
     [JsonPropertyName("ProductPriceItem")]
     public BoolFeature ProductPriceItem { get; init; } = new();
