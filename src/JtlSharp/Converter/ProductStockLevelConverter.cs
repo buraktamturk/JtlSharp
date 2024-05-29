@@ -22,14 +22,6 @@ public class ProductStockLevelConverter : JsonConverter<ProductStockLevel?>
 
     public override void Write(Utf8JsonWriter writer, ProductStockLevel? value, JsonSerializerOptions options)
     {
-        if (value is null)
-        {
-            writer.WriteNullValue();
-            return;
-        }
-        
-        writer.WriteStartObject();
-        writer.WriteNumber("stockLevel", value.stockLevel.Value);
-        writer.WriteEndObject();
+        JsonSerializer.Serialize<ProductStockLevel>(writer, value);
     }
 }

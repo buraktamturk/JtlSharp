@@ -199,6 +199,13 @@ public static class EndpointExtensions
                                 => await features.Entities.Unit.Process(rpc),
                             var s when s.StartsWith("warehouse.") 
                                 => await features.Entities.Warehouse.Process(rpc),
+                            
+                            var s when s.StartsWith("product_price.") 
+                                => await features.Entities.ProductPrice.Process(rpc),
+
+                            var s when s.StartsWith("product_stock_level.") 
+                                => await features.Entities.ProductStockLevel.Process(rpc),
+                            
                             var s when s.StartsWith("crossselling.") || s.StartsWith("cross_selling.")
                                 => await features.Entities.CrossSelling.Process(rpc),
 

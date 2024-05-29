@@ -179,7 +179,7 @@ public record Entities
     public BoolFeature ProductPartsList { get; init; } = new();
 
     [JsonPropertyName("ProductPrice")]
-    public BoolFeature ProductPrice { get; init; } = new();
+    public Feature<ProductPrice> ProductPrice { get; init; } = new();
 
     [JsonPropertyName("ProductPriceItem")]
     public BoolFeature ProductPriceItem { get; init; } = new();
@@ -194,7 +194,7 @@ public record Entities
     public BoolFeature ProductSpecific { get; init; } = new();
 
     [JsonPropertyName("ProductStockLevel")]
-    public BoolFeature ProductStockLevel { get; init; } = new();
+    public Feature<ProductStockLevel> ProductStockLevel { get; init; } = new();
 
     [JsonPropertyName("ProductType")]
     public Feature<ProductType> ProductType { get; init; } = new();
@@ -340,7 +340,7 @@ public static class EntitiesExtensions
             //"productSpecialPrice" => (IAckFeature)entities.ProductSpecialPrice,
             //"productSpecialPriceItem" => (IAckFeature)entities.ProductSpecialPriceItem,
             //"productSpecific" => (IAckFeature)entities.ProductSpecific,
-            "productStockLevel" => (IAckFeature)entities.ProductStockLevel,
+            "productStockLevel" => entities.ProductStockLevel,
             "productType" => (IAckFeature)entities.ProductType,
             //"productVarCombination" => (IAckFeature)entities.ProductVarCombination,
             //"productVariation" => (IAckFeature)entities.ProductVariation,
@@ -368,6 +368,7 @@ public static class EntitiesExtensions
             "unit" => (IAckFeature)entities.Unit,
             //"unitI18n" => (IAckFeature)entities.UnitI18n,
             "warehouse" => (IAckFeature)entities.Warehouse,
+            "productPrice" => entities.ProductPrice,
             _ => throw new NotImplementedException($"Unknown entity type for ACK: {type}")
         };
     }
