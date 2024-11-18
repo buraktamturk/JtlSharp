@@ -123,7 +123,7 @@ public class SampleJtlService : IJtlService
                 new ManufacturerI18n()
                 {
                     description = "Apple Desc",
-                    languageIso = "en",
+                    languageIso2 = "en",
                     metaDescription = "meta desc",
                     metaKeywords = "meta key",
                     titleTag = "title tag"
