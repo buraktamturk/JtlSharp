@@ -279,7 +279,7 @@ public static class EntitiesExtensions
 {
     public static IAckFeature GetAckFeature(this Entities entities, string type)
     {
-        return type.ToLowerInvariant() switch
+        return type.ToLowerInvariant().Replace("_", "") switch
         {
             "manufacturer" => (IAckFeature)entities.Manufacturer,
             //"manufacturerI18n" => (IAckFeature)entities.ManufacturerI18n,
