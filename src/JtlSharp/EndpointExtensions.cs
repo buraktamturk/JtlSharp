@@ -121,7 +121,7 @@ public static class EndpointExtensions
                         
                         var features = service.GetFeatures();
                         
-                        result = rpc.method.ToLowerInvariant() switch
+                        result = rpc.method.ToLowerInvariant().Replace("_", "") switch
                         {
                             "core.connector.features" => features,
                             "core.connector.ack" => await features.Entities.ProcessAck(rpc.Read<Ack>()!),
@@ -132,7 +132,7 @@ public static class EndpointExtensions
                                 ? await features.Entities.ProcessAck(ack, true)
                                 : await service.Clear(),
                             
-                            "global_data.pull" or "globaldata.pull" => Enumerable.Repeat(new GlobalData()
+                            "globaldata.pull" => Enumerable.Repeat(new GlobalData()
                             {
                                 currencies = features.Entities.Currency?.Pull is null ? [] : await features.Entities.Currency.Pull(null).ToListAsync(),
                                 languages = features.Entities.Language?.Pull is null ? [] : await features.Entities.Language.Pull(null).ToListAsync(),
@@ -200,13 +200,13 @@ public static class EndpointExtensions
                             var s when s.StartsWith("warehouse.") 
                                 => await features.Entities.Warehouse.Process(rpc),
                             
-                            var s when s.StartsWith("product_price.") 
+                            var s when s.StartsWith("productprice.") 
                                 => await features.Entities.ProductPrice.Process(rpc),
 
-                            var s when s.StartsWith("product_stock_level.") 
+                            var s when s.StartsWith("productstocklevel.") 
                                 => await features.Entities.ProductStockLevel.Process(rpc),
                             
-                            var s when s.StartsWith("crossselling.") || s.StartsWith("cross_selling.")
+                            var s when s.StartsWith("crossselling.")
                                 => await features.Entities.CrossSelling.Process(rpc),
 
                             _ => throw new InvalidOperationException("Method not found: " + rpc.method)
